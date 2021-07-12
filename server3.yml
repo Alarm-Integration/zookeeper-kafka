@@ -37,9 +37,7 @@ services:
       KAFKA_DEFAULT_REPLICATION_FACTOR: 3
       KAFKA_MIN_INSYNC_REPLICAS: 2
     volumes:
-      - kafka-data:/var/lib/kafka/data
+      - ./data/kafka3:/var/lib/kafka/data
 networks:
   kafka-network:
     name: kafka-network
-volumes:
-  kafka-data:

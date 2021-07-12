@@ -202,64 +202,92 @@ docker-compose -f server3.yml up -d
 ```bash
 docker run -it confluentinc/cp-kafkacat bash
 
-$ kafkacat -L -b 3.36.125.236:9092
-Metadata for all topics (from broker 1: 3.36.125.236:9092/1):
+$ kafkacat -L -b 139.150.75.238:19092
+Metadata for all topics (from broker 1: 139.150.75.238:19092/1):
  3 brokers:
-  broker 2 at 52.79.195.122:9092 (controller)
-  broker 3 at 3.35.141.179:9092
-  broker 1 at 3.36.125.236:9092
- 1 topics:
-  topic "__confluent.support.metrics" with 1 partitions:
-    partition 0, leader 2, replicas: 2, isrs: 2
-    
-$ kafkacat -L -b 3.36.125.236:19092
-Metadata for all topics (from broker -1: 3.36.125.236:19092/bootstrap):
- 3 brokers:
-  broker 2 at 172.31.15.156:19092 (controller)
-  broker 3 at 172.31.0.32:19092
-  broker 1 at 172.31.9.241:19092
- 1 topics:
-  topic "__confluent.support.metrics" with 1 partitions:
-    partition 0, leader 2, replicas: 2, isrs: 2
+  broker 2 at 139.150.75.239:19092
+  broker 3 at 139.150.75.240:19092
+  broker 1 at 139.150.75.238:19092 (controller)
 
-$ kafkacat -L -b 52.79.195.122:9092
-Metadata for all topics (from broker 2: 52.79.195.122:9092/2):
+$ kafkacat -L -b 139.150.75.239:19092
+Metadata for all topics (from broker 2: 139.150.75.239:19092/2):
  3 brokers:
-  broker 2 at 52.79.195.122:9092 (controller)
-  broker 3 at 3.35.141.179:9092
-  broker 1 at 3.36.125.236:9092
- 1 topics:
-  topic "__confluent.support.metrics" with 1 partitions:
-    partition 0, leader 2, replicas: 2, isrs: 2
+  broker 2 at 139.150.75.239:19092
+  broker 3 at 139.150.75.240:19092
+  broker 1 at 139.150.75.238:19092 (controller)
 
-$ kafkacat -L -b 52.79.195.122:19092
-Metadata for all topics (from broker -1: 52.79.195.122:19092/bootstrap):
+$ kafkacat -L -b 139.150.75.240:19092
+Metadata for all topics (from broker -1: 139.150.75.240:19092/bootstrap):
  3 brokers:
-  broker 2 at 172.31.15.156:19092 (controller)
-  broker 3 at 172.31.0.32:19092
-  broker 1 at 172.31.9.241:19092
- 1 topics:
-  topic "__confluent.support.metrics" with 1 partitions:
-    partition 0, leader 2, replicas: 2, isrs: 2
+  broker 2 at 139.150.75.239:19092
+  broker 3 at 139.150.75.240:19092
+  broker 1 at 139.150.75.238:19092 (controller)
 
-$ kafkacat -L -b 3.35.141.179:9092
-Metadata for all topics (from broker 3: 3.35.141.179:9092/3):
+kafkacat -L -b 139.150.75.238:9092
+Metadata for all topics (from broker -1: 139.150.75.238:9092/bootstrap):
  3 brokers:
-  broker 2 at 52.79.195.122:9092 (controller)
-  broker 3 at 3.35.141.179:9092
-  broker 1 at 3.36.125.236:9092
- 1 topics:
-  topic "__confluent.support.metrics" with 1 partitions:
-    partition 0, leader 2, replicas: 2, isrs: 2
+  broker 2 at 10.7.27.18:9092
+  broker 3 at 10.7.27.19:9092
+  broker 1 at 10.7.27.17:9092 (controller)
 
-$ kafkacat -L -b 3.35.141.179:19092
-Metadata for all topics (from broker -1: 3.35.141.179:19092/bootstrap):
+$ kafkacat -L -b 139.150.75.239:9092
+Metadata for all topics (from broker -1: 139.150.75.239:9092/bootstrap):
  3 brokers:
-  broker 2 at 172.31.15.156:19092 (controller)
-  broker 3 at 172.31.0.32:19092
-  broker 1 at 172.31.9.241:19092
- 1 topics:
-  topic "__confluent.support.metrics" with 1 partitions:
-    partition 0, leader 2, replicas: 2, isrs: 2
+  broker 2 at 10.7.27.18:9092
+  broker 3 at 10.7.27.19:9092
+  broker 1 at 10.7.27.17:9092 (controller)
+
+$ kafkacat -L -b 139.150.75.240:9092
+Metadata for all topics (from broker -1: 139.150.75.240:9092/bootstrap):
+ 3 brokers:
+  broker 2 at 10.7.27.18:9092
+  broker 3 at 10.7.27.19:9092
+  broker 1 at 10.7.27.17:9092 (controller)
 ```
 
+## 명령어 예시
+
+- bootstrap-server는 139.150.75.240:19092
+- [로컬에 카프카 설치후 압축 해제](https://archive.apache.org/dist/kafka/2.5.0/kafka_2.12-2.5.0.tgz)
+- 압축 해제 후 kafka_2.12-2.5.0/bin 위치에서 아래의 명령어를 입력
+
+```bash
+//토픽 리스트 확인
+./kafka-topics.sh --bootstrap-server 139.150.75.240:19092 --list
+__confluent.support.metrics
+
+//토픽 생성
+./kafka-topics.sh --bootstrap-server 139.150.75.240:19092 --create --topic email --partitions 3 --replication-factor 3
+./kafka-topics.sh --bootstrap-server 139.150.75.240:19092 --create --topic sms --partitions 3 --replication-factor 3
+./kafka-topics.sh --bootstrap-server 139.150.75.240:19092 --create --topic slakc --partitions 3 --replication-factor 3
+
+//토픽 리스트 재확인
+./kafka-topics.sh --bootstrap-server 139.150.75.238:19092 --list
+__confluent.support.metrics
+email
+slack
+sms
+
+//email 토픽 상세 정보 확인
+./kafka-topics.sh --bootstrap-server 139.150.75.239:19092 --describe --topic email
+Topic: email    PartitionCount: 3       ReplicationFactor: 3    Configs:
+        Topic: email    Partition: 0    Leader: 2       Replicas: 2,3,1 Isr: 2,3,1
+        Topic: email    Partition: 1    Leader: 3       Replicas: 3,1,2 Isr: 3,1,2
+        Topic: email    Partition: 2    Leader: 1       Replicas: 1,2,3 Isr: 1,2,3
+ 
+//sms 토픽 상세 정보 확인
+./kafka-topics.sh --bootstrap-server 139.150.75.240:19092 --describe --topic sms
+Topic: sms      PartitionCount: 3       ReplicationFactor: 2    Configs:
+        Topic: sms      Partition: 0    Leader: 2       Replicas: 2,1   Isr: 2,1
+        Topic: sms      Partition: 1    Leader: 3       Replicas: 3,2   Isr: 3,2
+        Topic: sms      Partition: 2    Leader: 1       Replicas: 1,3   Isr: 1,3
+        
+// 컨슈머 그룹 목록 확인
+./kafka-consumer-groups.sh --bootstrap-server 139.150.75.240:19092 --list
+
+//컨슈머 상태와 오프셋 확인
+./kafka-consumer-groups.sh --bootstrap-server 139.150.75.240:19092 --group email --describe
+
+// email 토픽으로 레코드 프로듀싱하기
+./kafka-console-producer.sh --bootstrap-server 139.150.75.240:19092--topic email
+```

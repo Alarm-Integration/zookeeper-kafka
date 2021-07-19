@@ -73,6 +73,9 @@ services:
       ZOOKEEPER_INIT_LIMIT: 10
       ZOOKEEPER_SYNC_LIMIT: 5
       ZOOKEEPER_SERVERS: "0.0.0.0:2888:3888;10.7.27.18:2888:3888;10.7.27.19:2888:3888"
+    volumes:
+      - ./data/zookeeper1/data:/var/lib/zookeeper/data
+      - ./data/zookeeper1/log:/var/lib/zookeeper/log
   kafka:
     image: confluentinc/cp-kafka:5.5.0
     container_name: kafka
@@ -121,6 +124,9 @@ services:
       ZOOKEEPER_INIT_LIMIT: 10
       ZOOKEEPER_SYNC_LIMIT: 5
       ZOOKEEPER_SERVERS: "10.7.27.17:2888:3888;0.0.0.0:2888:3888;10.7.27.19:2888:3888"
+    volumes:
+      - ./data/zookeeper2/data:/var/lib/zookeeper/data
+      - ./data/zookeeper2/log:/var/lib/zookeeper/log
   kafka:
     image: confluentinc/cp-kafka:5.5.0
     container_name: kafka
@@ -169,6 +175,9 @@ services:
       ZOOKEEPER_INIT_LIMIT: 10
       ZOOKEEPER_SYNC_LIMIT: 5
       ZOOKEEPER_SERVERS: "10.7.27.17:2888:3888;10.7.27.18:2888:3888;0.0.0.0:2888:3888"
+    volumes:
+      - ./data/zookeeper3/data:/var/lib/zookeeper/data
+      - ./data/zookeeper3/log:/var/lib/zookeeper/log
   kafka:
     image: confluentinc/cp-kafka:5.5.0
     container_name: kafka
